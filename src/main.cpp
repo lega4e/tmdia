@@ -41,7 +41,7 @@ int main( int argc, char *argv[] )
 
 		}
 
-		window.clear(Color::White);
+		window.clear(bgcolor);
 		draw_all();
 		window.display();
 	}

@@ -191,6 +191,10 @@ struct TimeDia
 
 
 	// methods
+	/*
+	 * Добавить узел (может быть как листом, т.е.
+	 * конечным интервалом, так и группой TimeDia)
+	 */
 	void push(INode<T> const &node)
 	{
 		if(node.leaf)
@@ -201,81 +205,6 @@ struct TimeDia
 		push(dia);
 		return;
 	}
-
-	bool push(
-		std::vector<Interval<T>> const &inters,
-		int off = 0, int n = 0,
-		bool inarow = false
-	)
-	{
-		if(n >= (int)inters.size())
-			return true;
-
-		if(inarow)
-		{
-			if(off >= (int)field.size())
-			{
-				do
-					field.push_back( Line<T>() );
-				while(off >= (int)field.size());
-				
-				field.back().insert( inters[n] );
-				push(inters, (int)field.size(), n+1, true);
-				return true;
-			}
-
-			if(fits(inters[n], field[off]) && push(inters, off+1, n+1, true))
-			{
-				field[off].insert(inters[n]);
-				return true;
-			}
-
-			return false;
-		}
-
-		for(int i = off; i < (int)field.size(); ++i)
-		{
-			if(fits(inters[n], field[i]) && push(inters, i+1, n+1, true))
-			{
-				field[i].insert(inters[n]);
-				return true;
-			}
-		}
-
-		field.push_back( Line<T>() );
-		field.back().insert(inters[n]);
-		push(inters, (int)field.size(), n+1, true);
-		return true;
-	}
-
-
-	void print()
-	{
-		for(auto b = field.begin(), e = field.end(); b != e; ++b)
-		{
-			if(b != field.begin())
-				putchar('\n');
-			lis::print(*b);
-		}
-		return;
-	}
-
-	void calculate_bounds()
-	{
-	 	min = int_max;
-		max = int_min;
-
-		for(auto b = field.begin(), e = field.end(); b != e; ++b)
-		for(auto bb = b->begin(), ee = b->end(); bb != ee; ++bb)
-		{
-			min = std::min(min, bb->beg);
-			max = std::max(max, bb->end);
-		}
-
-		return;
-	}
-
-
 
 	void push(Interval<T> const &inter)
 	{
@@ -325,6 +254,43 @@ struct TimeDia
 	continue_mainloop_label:
 		++off;
 		goto again;
+	}
+
+
+	/*
+	 * Найти границы, в которых расположены все интервалы
+	 */
+	void calculate_bounds()
+	{
+	 	min = int_max;
+		max = int_min;
+
+		for(auto b = field.begin(), e = field.end(); b != e; ++b)
+		for(auto bb = b->begin(), ee = b->end(); bb != ee; ++bb)
+		{
+			min = std::min(min, bb->beg);
+			max = std::max(max, bb->end);
+		}
+
+		return;
+	}
+
+
+
+	/*
+	 * Вывести в виде строки
+	 */
+	template<class Ostream>
+	Ostream &print( Ostream &os ) const
+	{
+		for(auto b = field.begin(), e = field.end(); b != e; ++b)
+		{
+			if(b != field.begin())
+				os.put('\n');
+			print(os, *b);
+		}
+
+		return os;
 	}
 };
 

@@ -80,11 +80,6 @@ template<typename T = void>
 class Line: public sf::Drawable
 {
 public:
-
-
-
-
-
 	Line(
 		PointD begin = {0.0, 0.0},
 		PointD end   = {0.0, 0.0},
