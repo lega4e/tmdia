@@ -5,6 +5,7 @@
 #include <set>
 #include <vector>
 
+#include <lis/iostream.hpp>
 #include <lis/type.hpp>
 
 
