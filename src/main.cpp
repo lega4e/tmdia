@@ -21,7 +21,6 @@ int main( int argc, char *argv[] )
 	{
 		while(window.pollEvent(event))
 		{
-
 			switch(event.type)
 			{
 			case Event::KeyPressed:

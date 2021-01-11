@@ -1,6 +1,9 @@
 #include "declare.hpp"
 
+#include <algorithm>
+#include <exception>
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <memory>
 #include <string>
@@ -100,44 +103,71 @@ void init_text()
 	return;
 }
 
+/*
+ * functions for read intervals from json file
+ */
+td::INode<value_type> read_leaf_node(
+	nlohmann::json const &j,
+	std::string const &group
+)
+{
+	using namespace nlohmann;
+
+	td::Interval<value_type> in;
+	in.beg = j["beg"]; 
+	in.end = j["end"];
+	in.value = value_type(new interdata_type{ stows(j["value"]), group });
+
+	return td::INode<value_type>(in);
+}
+
+td::INode<value_type> read_node(
+	nlohmann::json const &j,
+	std::string group = "global"
+)
+{
+	using namespace nlohmann;
+
+	if(j.find("items") == j.end())
+		return read_leaf_node(j, group);
+
+	td::INode<value_type> node(false);
+
+	group = j.value("group", group);
+	json items = j["items"];
+	for(auto b = items.begin(), e = items.end(); b != e; ++b)
+		node.ins.push_back(read_node(*b, group));
+
+	sort( node.ins.begin(), node.ins.end() );
+	return node;
+}
+
+void read_groups(nlohmann::json const &root)
+{
+	using namespace nlohmann;
+
+	json jgrs = root["groups"];
+	for(auto b = jgrs.begin(), e = jgrs.end(); b != e; ++b)
+		groups.insert({ (string)(*b)["name"], tocolor(b->value("color", "f")) });
+	return;
+}
+
 void init_dia()
 {
 	using namespace nlohmann;
 
-	json data;
-	cin >> data;
-
-	json grs = data["groups"];
-	for(auto b = grs.begin(), e = grs.end(); b != e; ++b)
-		groups.insert({ (string)(*b)["name"], tocolor((string)(*b)["color"]) });
-
-	map<string, td::INode<value_type>> nodes;
-
-	json items = data["items"];
-	wstring s;
-	string g;
-	for(auto b = items.begin(), e = items.end(); b != e; ++b)
+	try
 	{
-		s = stows((*b)["value"]);
-		g = (*b)["group"];
-
-		auto it = nodes.find(g);
-
-		if(it == nodes.end())
-			nodes.insert({ g, td::INode<value_type>(false) }),
-			it = nodes.find(g);
-
-		it->second.ins.push_back(
-			td::Interval<value_type> {
-				(*b)["beg"], (*b)["end"],
-				value_type(new interdata_type{ s, g })
-			}
-		);
+		json root;
+		cin >> root;
+		read_groups(root);
+		dia.push(read_node(root));
 	}
-
-	for(auto b = nodes.begin(), e = nodes.end(); b != e; ++b)
-		sort( b->second.ins.begin(), b->second.ins.end() ),
-		dia.push(b->second);
+	catch(exception const &e)
+	{
+		cerr << e.what() << endl;
+		exit(0);
+	}
 
 	dia.calculate_bounds();
 	rat = (vmode.width - 2*margin) / (double)(dia.max - dia.min);
@@ -146,6 +176,10 @@ void init_dia()
 }
 
 
+
+/*
+ * draw functions
+ */
 void draw_all()
 {
 	draw_dia();
