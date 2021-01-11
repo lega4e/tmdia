@@ -1,0 +1,54 @@
+{
+	"items" : [
+		{ "beg" : 1749, "end" : 1802, "group" : "rulit", "value" : "Радищев"         },
+		{ "beg" : 1766, "end" : 1828, "group" : "rulit", "value" : "Карамзин"        },
+		{ "beg" : 1769, "end" : 1844, "group" : "rulit", "value" : "Крылов"          },
+		{ "beg" : 1799, "end" : 1837, "group" : "rulit", "value" : "Пушкин"          },
+		{ "beg" : 1809, "end" : 1852, "group" : "rulit", "value" : "Гоголь"          },
+		{ "beg" : 1814, "end" : 1841, "group" : "rulit", "value" : "Лермонтов"       },
+		{ "beg" : 1818, "end" : 1883, "group" : "rulit", "value" : "Тургенев"        },
+		{ "beg" : 1821, "end" : 1881, "group" : "rulit", "value" : "Достоевский"     },
+		{ "beg" : 1821, "end" : 1887, "group" : "rulit", "value" : "Некрасов"        },
+		{ "beg" : 1826, "end" : 1889, "group" : "rulit", "value" : "Салтыков-Щедрин" },
+		{ "beg" : 1828, "end" : 1910, "group" : "rulit", "value" : "Л.Н.Толстой"     },
+		{ "beg" : 1843, "end" : 1902, "group" : "rulit", "value" : "Успенский"       },
+		{ "beg" : 1860, "end" : 1904, "group" : "rulit", "value" : "Чехов"           },
+		{ "beg" : 1868, "end" : 1936, "group" : "rulit", "value" : "Горький"         },
+		{ "beg" : 1870, "end" : 1938, "group" : "rulit", "value" : "Куприн"          },
+		{ "beg" : 1883, "end" : 1945, "group" : "rulit", "value" : "А.Н.Толстой"     },
+		{ "beg" : 1905, "end" : 1984, "group" : "rulit", "value" : "Шолохов"         },
+
+		{ "beg" : 1561, "end" : 1625, "group" : "philo", "value" : "Френсис Бэкон" },
+		{ "beg" : 1596, "end" : 1650, "group" : "philo", "value" : "Рене Декарт"   },
+		{ "beg" : 1632, "end" : 1677, "group" : "philo", "value" : "Спиноза"       },
+		{ "beg" : 1709, "end" : 1751, "group" : "philo", "value" : "Ламерти"       },
+		{ "beg" : 1643, "end" : 1727, "group" : "philo", "value" : "Ньютон"        },
+		{ "beg" : 1646, "end" : 1716, "group" : "philo", "value" : "Лейбниц"       },
+		{ "beg" : 1724, "end" : 1804, "group" : "philo", "value" : "Кант"          },
+		{ "beg" : 1770, "end" : 1831, "group" : "philo", "value" : "Гегель"        },
+		{ "beg" : 1694, "end" : 1778, "group" : "philo", "value" : "Вольтер"       },
+		{ "beg" : 1712, "end" : 1778, "group" : "philo", "value" : "Руссо"         },
+		{ "beg" : 1713, "end" : 1784, "group" : "philo", "value" : "Дидро"         },
+		{ "beg" : 1762, "end" : 1814, "group" : "philo", "value" : "Фихте"         },
+
+		{ "beg" : 1818, "end" : 1883, "group" : "marks", "value" : "Маркс"    },
+		{ "beg" : 1820, "end" : 1895, "group" : "marks", "value" : "Энгельс"  },
+		{ "beg" : 1870, "end" : 1924, "group" : "marks", "value" : "Ленин"    },
+		{ "beg" : 1856, "end" : 1918, "group" : "marks", "value" : "Плеханов" }
+	],
+
+	"groups" : [
+		{
+			"name"  : "rulit",
+			"color" : "#88ADA8"
+		},
+		{
+			"name"  : "philo",
+			"color" : "#9D88AD"
+		},
+		{
+			"name"  : "marks",
+			"color" : "#AD8888"
+		}
+	]
+}
